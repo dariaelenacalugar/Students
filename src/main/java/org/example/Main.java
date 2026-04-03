@@ -2,8 +2,11 @@ package org.example;
 
 import ro.ulbs.proiectaresoftware.students.Student;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class Main{
     public static void main(String[] args) {
@@ -21,7 +24,59 @@ public class Main{
         Student s1=new Student(120,"Alis","Popa","TI21/2");
         boolean containsStudent=verificaStudent(listaStudenti,s1);
         System.out.println(containsStudent);
+        //P.3.5.2
+        List<Student> listStudenti=new ArrayList<>();
+        try{
+            List<String>linii= Files.readAllLines(Paths.get("studenti_in.txt"));
+            for(String linie:linii){
+                String[] parts=linie.split(",");
+                int numarMatricol=Integer.parseInt(parts[0]);
+                String prenume=parts[1];
+                String nume=parts[2];
+                String formatiaDeStudiu=parts[3];
+                listStudenti.add(new Student(numarMatricol,prenume,nume,formatiaDeStudiu));
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        };
+        for(Student s:listStudenti){
+            System.out.println(s);
+        }
+        //listStudenti.sort((s2,s3)->s2.getFormatieDeStudiu().compareTo(s3.getFormatieDeStudiu()));
+        listStudenti.sort((s2,s3)->s2.getNume().compareTo(s3.getNume()));
 
+        try{
+            List<String>liniiOut=new ArrayList<>();
+            for(Student s:listStudenti){
+                liniiOut.add(s.getNume()+","+s.getNume()+","+s.getPrenume()+","+s.getFormatieDeStudiu());
+            }
+            Files.write(Paths.get("src/main/java/ro/ulbs/proiectaresoftware/studenti_out.txt"),liniiOut);
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        //P.3.5.3
+        Collections.sort(listStudenti,new Comparator<Student>(){
+            @Override
+            public int compare(Student s1, Student s2) {
+                int res=s1.getFormatieDeStudiu().compareTo(s2.getFormatieDeStudiu());
+                if(res==0)
+                {
+                    res=s1.getNume().compareTo(s2.getNume());
+                }
+                return res;
+            }
+        });
+        List<String>liniiSort=new ArrayList<>();
+        for(Student s:listStudenti){
+            liniiSort.add(s.getNumarMatricol()+","+s.getNume()+","+s.getPrenume()+","+s.getFormatieDeStudiu());
+        }
+        try{
+            Files.write(Path.of("studenti_out_sorted.txt"),liniiSort);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
     }
     public static boolean verificaStudent(List<Student>listaStudenti,Student s1)

@@ -4,6 +4,7 @@ public class Student {
     String prenume;
     String nume;
     String formatieDeStudiu;
+    float nota;
 
     public Student(int numarMatricol, String prenume, String nume, String formatieDeStudiu) {
         this.numarMatricol = numarMatricol;
@@ -35,10 +36,12 @@ public class Student {
     public void setFormatieDeStudiu(String formatieDeStudiu) {
         this.formatieDeStudiu = formatieDeStudiu;
     }
-
+    public void setNota(float nota) {
+        this.nota = nota;
+    }
     @Override
     public String toString() {
-        return String.format("%15d %15s %15s %15s",numarMatricol, prenume, nume, formatieDeStudiu);
+        return String.format("%15d %15s %15s %15s",numarMatricol, prenume, nume, formatieDeStudiu,nota);
     }
 }
 
