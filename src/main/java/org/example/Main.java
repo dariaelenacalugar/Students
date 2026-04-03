@@ -3,6 +3,7 @@ package org.example;
 import ro.ulbs.proiectaresoftware.students.Student;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -11,17 +12,17 @@ import java.util.*;
 public class Main{
     public static void main(String[] args) {
         List<Student> listaStudenti=new ArrayList<Student>();
-        listaStudenti.add(new Student(112, "Ioan", "Popa", "TI21/1"));
-        listaStudenti.add(new Student(112, "Maria", "Oprea", "TI21/1"));
-        listaStudenti.add(new Student(120,"Alis","Popa","TI21/2"));
-        listaStudenti.add(new Student(122, "Mihai", "Vercedea", "TI22/1"));
-        listaStudenti.add(new Student(122, "Eugen", "Uritescu", "TI22/2"));
+        listaStudenti.add(new Student(112, "Ioan", "Popa", "TI21/1",9));
+        listaStudenti.add(new Student(112, "Maria", "Oprea", "TI21/1",8));
+        listaStudenti.add(new Student(120,"Alis","Popa","TI21/2",10));
+        listaStudenti.add(new Student(122, "Mihai", "Vercedea", "TI22/1",4));
+        listaStudenti.add(new Student(122, "Eugen", "Uritescu", "TI22/2",5));
 
         System.out.println("Lista studenti: ");
         for(Student s:listaStudenti){
             System.out.println(s);
         }
-        Student s1=new Student(120,"Alis","Popa","TI21/2");
+        Student s1=new Student(120,"Alis","Popa","TI21/2",10);
         boolean containsStudent=verificaStudent(listaStudenti,s1);
         System.out.println(containsStudent);
         //P.3.5.2
@@ -34,7 +35,8 @@ public class Main{
                 String prenume=parts[1];
                 String nume=parts[2];
                 String formatiaDeStudiu=parts[3];
-                listStudenti.add(new Student(numarMatricol,prenume,nume,formatiaDeStudiu));
+                double nota=0;
+                listStudenti.add(new Student(numarMatricol,prenume,nume,formatiaDeStudiu,nota));
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -77,7 +79,31 @@ public class Main{
         }catch(Exception e){
             e.printStackTrace();
         }
+        //P.4.5.2
+        Map<Integer,Student>mapStudenti=new HashMap<>();
+        for(Student s:listStudenti){
+            mapStudenti.put(s.getNumarMatricol(),s);
+        }
 
+        try{
+            List<String>linieNota=Files.readAllLines(Paths.get("note_anon.txt"));
+            for(String linie:linieNota){
+                String[] date=linie.split(",");
+                int NumarMatricol=Integer.parseInt(date[0].trim());
+                double valNota=Double.parseDouble(date[1].trim());
+                Student s=mapStudenti.get(NumarMatricol);
+                if(s!=null)
+                {
+                    s.setNota(valNota);
+                }
+            }
+        }catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+        for(Student s:mapStudenti.values()){
+            System.out.println(s);
+        }
     }
     public static boolean verificaStudent(List<Student>listaStudenti,Student s1)
     {
