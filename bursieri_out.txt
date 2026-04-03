@@ -1,0 +1,4 @@
+           1025          Andrei            Popa        ISM141/2Bursa: 725.5
+           1024            Ioan        Mihalcea        ISM141/1Bursa: 801.1
+           1026        Anamaria          Prodan         TI131/1Bursa: 745.5
+           1029          Bianca         Popescu         TI131/1Bursa: 780.8

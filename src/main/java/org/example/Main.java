@@ -1,6 +1,7 @@
 package org.example;
 
 import ro.ulbs.proiectaresoftware.students.Student;
+import ro.ulbs.proiectaresoftware.students.StudentBursieri;
 
 import java.io.File;
 import java.io.IOException;
@@ -101,11 +102,18 @@ public class Main{
         for (Student s : mapStudenti.values()) {
             System.out.println(s);
         }
-            float notaM = gasesteNota("Bianca", "Popescu", mapStudenti);
-            float notaN = gasesteNota("Ioan", "Popa", mapStudenti);
+        float notaM = gasesteNota("Bianca", "Popescu", mapStudenti);
+        float notaN = gasesteNota("Ioan", "Popa", mapStudenti);
 
-            System.out.println("Nota Bianca Popescu: " + notaM);
-            System.out.println("Nota Ioan Popa: " + notaN);
+        System.out.println("Nota Bianca Popescu: " + notaM);
+        System.out.println("Nota Ioan Popa: " + notaN);
+
+        List<Student> bursieri = new ArrayList<>();
+        bursieri.add(new StudentBursieri(1025, "Andrei", "Popa", "ISM141/2", 8.70,725.50));
+        bursieri.add(new StudentBursieri(1024,"Ioan","Mihalcea","ISM141/1", 9.80, 801.10));
+        bursieri.add(new StudentBursieri(1026,"Anamaria","Prodan","TI131/1", 8.90, 745.50));
+        bursieri.add(new StudentBursieri(1029,"Bianca","Popescu","TI131/1", 9.10, 780.80));
+        scrieInFisier("bursieri_out.txt", bursieri);
     }
 
     //Tema lab 4
@@ -135,5 +143,18 @@ public class Main{
             }
         }
         return false;
+    }
+    //P.5.5.3
+    public static void scrieInFisier(String numeFisier,Collection<? extends Student> studenti)
+    {
+        List<String>listaFisier = new ArrayList<>();
+        for (Student s : studenti) {
+            listaFisier.add(s.toString());
+        }
+        try{
+            Files.write(Paths.get(numeFisier),listaFisier);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }
