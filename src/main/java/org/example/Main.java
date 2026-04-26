@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class Main{
+public class Main {
     public static void main(String[] args) {
         List<Student> listaStudenti = new ArrayList<Student>();
         listaStudenti.add(new Student(112, "Ioan", "Popa", "TI21/1", 9));
@@ -23,6 +23,35 @@ public class Main{
         for (Student s : listaStudenti) {
             System.out.println(s);
         }
+        List<Student> rezultat = mutaStudenti(listaStudenti, "GR1", "GR2");
+        System.out.println("Lista studenti: ");
+        for (Student s : listaStudenti) {
+            System.out.println(s);
+        }
+
+    }
+    public static List<Student>mutaStudenti(List<Student> studenti,String f1,String f2)
+    {
+
+        List<Student> rezultat = new ArrayList<>();
+
+        int n = studenti.size();
+        int jumatate = (n + 1) / 2;
+
+        for (int i = 0; i < n; i++) {
+            Student s = studenti.get(i);
+
+            if (i < jumatate) {
+                rezultat.add(s.withFormatieDeStudiu(f1));
+            } else {
+                rezultat.add(s.withFormatieDeStudiu(f2));
+            }
+        }
+
+        return rezultat;
+    }
+}
+        /*
         Student s1 = new Student(120, "Alis", "Popa", "TI21/2", 10);
         boolean containsStudent = verificaStudent(listaStudenti, s1);
         System.out.println(containsStudent);
@@ -156,5 +185,4 @@ public class Main{
         }catch(Exception e){
             e.printStackTrace();
         }
-    }
-}
+    }*/
