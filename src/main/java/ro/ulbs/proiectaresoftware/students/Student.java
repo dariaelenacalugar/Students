@@ -1,10 +1,10 @@
 package ro.ulbs.proiectaresoftware.students;
 public final class Student {
-    private final int numarMatricol;
-    private final String prenume;
-    private final String nume;
-    private final String formatieDeStudiu;
-    private final double nota;
+    private  int numarMatricol;
+    private  String prenume;
+    private String nume;
+    private String formatieDeStudiu;
+    private  double nota;
 
     public Student(int numarMatricol, String prenume, String nume, String formatieDeStudiu,double nota) {
         this.numarMatricol = numarMatricol;
@@ -30,6 +30,9 @@ public final class Student {
     }
     public double getNota() {
         return nota;
+    }
+    public void setNota(double nota) {
+        this.nota=nota;
     }
     public Student withFormatieDeStudiu(String formatieDeStudiu) {
         return new Student(numarMatricol, prenume, nume, formatieDeStudiu, nota);
